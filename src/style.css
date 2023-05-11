@@ -3,6 +3,7 @@
   padding: 0;
   border: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 .root {
@@ -42,4 +43,21 @@
   margin-bottom: 1rem;
   border-radius: 4px;
   width: 100%;
+}
+
+#render {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#startButton {
+  padding: 10px;
+  background-color: #3a8fff;
+  color: white;
+  border-radius: 4px;
 }

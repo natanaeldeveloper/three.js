@@ -17,7 +17,10 @@ let scene,
   intersects,
   colorInput
 
-init()
+window.onload = () => {
+  const startButton = document.querySelector('#startButton')
+  startButton.addEventListener('click', init)
+}
 
 function init() {
   scene = new THREE.Scene()
@@ -28,6 +31,7 @@ function init() {
   camera.position.set(2, 1, 4)
 
   container = document.querySelector('#render')
+  container.innerHTML = ''
 
   renderer = new THREE.WebGLRenderer(scene, camera)
   renderer.setSize((window.innerWidth - 300), window.innerHeight)
