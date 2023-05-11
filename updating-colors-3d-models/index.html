@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THREE.js | Updating Colors 3D Models</title>
+  <script type="module" src="src/main.js"></script>
+</head>
+
+<body>
+  <div class="root">
+    <div class="controls">
+      <form id="form">
+        <h4 style="margin-bottom: 1rem;">ELEMENTOS SELECIONADOS</h4>
+
+        <div class="form-group">
+          <label for="">Quantidade:</label>
+          <input type="number" name="count" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+          <label for="">Elementos:</label>
+          <textarea name="names" rows="10" class="form-control" disabled></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="">Selecionar cor:</label>
+          <input type="color" name="color" id="color"/>
+        </div>
+      </form>
+    </div>
+    <div id="render">
+      <input type="button" id="startButton" value="RENDERIZAR MODELO" />
+      <p>File size: <strong>16MB</strong></p>
+    </div>
+  </div>
+</body>
+
+</html>
