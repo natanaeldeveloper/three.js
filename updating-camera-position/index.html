@@ -7,30 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THREE.js | Updating Camera Position</title>
   <script type="module" src="src/main.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="root">
-    <div class="controls">
-      <form id="form">
-        <h4 style="margin-bottom: 1rem;">ELEMENTO EM FOCO</h4>
-
-        <div class="form-group">
-          <label for="">Elemento:</label>
-          <textarea name="name" rows="3" class="form-control" disabled></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="">Selecionar cor:</label>
-          <input type="color" name="color" id="color"/>
-        </div>
-      </form>
-    </div>
-    <div id="render">
-      <input type="button" id="startButton" value="RENDERIZAR MODELO" />
-      <p>File size: <strong>16MB</strong></p>
-    </div>
-  </div>
+  <div id="root"></div>
+  <script src="./node_modules/three/examples/js/libs/draco/draco_decoder.js"></script>
 </body>
 
 </html>

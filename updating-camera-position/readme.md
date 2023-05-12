@@ -7,4 +7,4 @@ Neste projeto foram explorados alguns recursos do THREE.js, como:
 * `Raycaster` - Intercector de faces do modelo em foco
 
 ### Demonstração
-![demo](demo.gif)
+![demo]()
