@@ -1,0 +1,16 @@
+{
+  "name": "01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "three": "^0.152.2",
+    "vite": "^4.3.5"
+  },
+  "dependencies": {
+    "dat.gui": "^0.7.9"
+  }
+}
