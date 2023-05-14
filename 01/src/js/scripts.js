@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as dat from 'dat.gui'
 
 import starsImg from '../imgs/stars.jpg'
+import nebulaImg from '../imgs/nebula.jpg'
 
 const renderer = new THREE.WebGLRenderer()
 
@@ -84,7 +85,41 @@ scene.add(sLightHelper)
 // renderer.setClearColor('#DCFF00')
 
 const textureLoader = new THREE.TextureLoader()
-scene.background = textureLoader.load(starsImg)
+// scene.background = textureLoader.load(textureLoader)
+
+const cubeTextureLoader = new THREE.CubeTextureLoader()
+scene.background = cubeTextureLoader.load([
+  starsImg,
+  starsImg,
+  nebulaImg,
+  nebulaImg,
+  nebulaImg,
+  nebulaImg,
+])
+
+const box2MultMesh = [
+  new THREE.MeshBasicMaterial({ map: textureLoader.load(nebulaImg) }),
+  new THREE.MeshBasicMaterial({ map: textureLoader.load(nebulaImg) }),
+  new THREE.MeshBasicMaterial({ map: textureLoader.load(starsImg) }),
+  new THREE.MeshBasicMaterial({ map: textureLoader.load(starsImg) }),
+  new THREE.MeshBasicMaterial({ map: textureLoader.load(nebulaImg) }),
+  new THREE.MeshBasicMaterial({ map: textureLoader.load(nebulaImg) }),
+]
+
+const box2Geometry = new THREE.BoxGeometry(4, 4, 4)
+
+// const box2Material = new THREE.MeshStandardMaterial({
+//   color: 0x00FF00,
+//   map: textureLoader.load(nebulaImg)
+// })
+
+// const box2 = new THREE.Mesh(box2Geometry, box2Material)
+
+const box2 = new THREE.Mesh(box2Geometry, box2MultMesh)
+
+scene.add(box2)
+box2.position.set(-7, 5, 0)
+box2.name = 'box2'
 
 const gui = new dat.GUI()
 
@@ -112,7 +147,27 @@ gui.add(options, 'penumbra', 0, 1)
 gui.add(options, 'intensity', 0, 1)
 
 let step = 0
-let speed = 0.01
+
+let mousePosition = new THREE.Vector2()
+
+window.addEventListener('mousemove', (e) => {
+  mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1
+  mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1
+})
+
+const sphereId = 12
+
+const rayCaster = new THREE.Raycaster()
+
+const plane2Geometry = new THREE.PlaneGeometry(20, 20, 10, 10)
+const plane2Material = new THREE.MeshBasicMaterial({
+  wireframe: true
+})
+const plane2 = new THREE.Mesh(plane2Geometry, plane2Material)
+scene.add(plane2)
+plane2.position.set(10, 20, 0)
+
+const lastPointZ = plane2.geometry.attributes.position.array.length - 1
 
 function animate(time) {
 
@@ -121,22 +176,39 @@ function animate(time) {
 
   step += options.speed
 
-  console.log(sphere.position.y)
-
   sphere.position.x = 10 * Math.abs(Math.sin(step))
   sphere.position.y = 10 * Math.abs(Math.sin(step))
-
-  if (sphere.position.y <= 4) {
-
-  } else {
-    // sphere.position.x = 10 * Math.abs(Math.sin(step))
-    // sphere.position.y = 10 * Math.abs(Math.sin(step))
-  }
 
   spotLight.angle = options.angle
   spotLight.penumbra = options.penumbra
   spotLight.intensity = options.intensity
   sLightHelper.update()
+
+  rayCaster.setFromCamera(mousePosition, camera)
+  const intersects = rayCaster.intersectObjects(scene.children)
+  console.log(intersects)
+
+  for (let i = 0; i < intersects.length; i++) {
+    if (intersects[i].object.id == sphereId) {
+      intersects[i].object.material.color.set('#D42EF2')
+    }
+
+    if (intersects[i].object.name == 'box2') {
+      box2.rotation.x = time / 1000
+      box2.rotation.y = time / 1000
+    }
+  }
+
+  plane2.geometry.attributes.position.array[0] = 10 * Math.random()
+  plane2.geometry.attributes.position.array[1] = 10 * Math.random()
+  plane2.geometry.attributes.position.array[2] = 10 * Math.random()
+
+  plane2.geometry.attributes.position.array[lastPointZ] = 10 * Math.random()
+  plane2.geometry.attributes.position.array[lastPointZ] = 10 * Math.random()
+  plane2.geometry.attributes.position.array[lastPointZ] = 10 * Math.random()
+
+  plane2.geometry.attributes.position.needsUpdate = true
+
 
   renderer.render(scene, camera)
 }
